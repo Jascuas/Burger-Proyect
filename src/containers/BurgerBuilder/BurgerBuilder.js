@@ -30,6 +30,7 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props);
     axios
       .get("https://my-burger-app-d8b73.firebaseio.com/ingredients.json")
       .then(response => {
@@ -39,6 +40,7 @@ class BurgerBuilder extends Component {
         this.setState({ error: true });
       });
   }
+
   updatePurchaseState(ingredients) {
     const sum = Object.keys(ingredients)
       .map(igKey => {
@@ -90,29 +92,8 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    // this.setState({ loading: true });
-    // const order = {
-    //   ingredients: this.state.ingredients,
-    //   price: this.state.totalPrice,
-    //   cutomer: {
-    //     name: "Faka",
-    //     address: {
-    //       street: "fake street",
-    //       zipCode: "42154",
-    //       country: "Spain"
-    //     },
-    //     email: "test@test.com"
-    //   },
-    //   deliveryMethod: "fastest"
-    // };
-    // axios
-    //   .post("/orders.json", order)
-    //   .then(response => {
-    //     this.setState({ loading: false, purchasing: false });
-    //   })
-    //   .catch(error => {
-    //     this.setState({ loading: false, purchasing: false });
-    //   });
+    // alert('You continue!');
+
     const queryParams = [];
     for (let i in this.state.ingredients) {
       queryParams.push(
@@ -121,6 +102,7 @@ class BurgerBuilder extends Component {
           encodeURIComponent(this.state.ingredients[i])
       );
     }
+    queryParams.push("price=" + this.state.totalPrice);
     const queryString = queryParams.join("&");
     this.props.history.push({
       pathname: "/checkout",
@@ -136,12 +118,12 @@ class BurgerBuilder extends Component {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
     let orderSummary = null;
-
     let burger = this.state.error ? (
-      <p>Ingredients can´t be loaded!</p>
+      <p>Ingredients can't be loaded!</p>
     ) : (
       <Spinner />
     );
+
     if (this.state.ingredients) {
       burger = (
         <Aux>
@@ -165,10 +147,10 @@ class BurgerBuilder extends Component {
         />
       );
     }
-
     if (this.state.loading) {
       orderSummary = <Spinner />;
     }
+    // {salad: true, meat: false, ...}
     return (
       <Aux>
         <Modal

@@ -35,16 +35,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false
       };
-      case actionTypes.PURCHASE_INIT:
-      return {
-        ...state,
-        purchased: false
-      };
-      case actionTypes.PURCHASE_INIT:
-      return {
-        ...state,
-        purchased: false
-      };
     default:
       return state;
   }

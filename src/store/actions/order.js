@@ -78,3 +78,9 @@ export const fetchOrders = token => {
       });
   };
 };
+
+export const resetOrdersOnLogout = () => {
+  return {
+    type: actionTypes.RESET_ORDERS_ON_LOGOUT
+  };
+};
